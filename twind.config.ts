@@ -11,7 +11,7 @@ export default {
 
     return css(preflight, {
       html: { scrollBehavior: 'smooth' },
-      body: apply`flex flex-col items-center min-h-screen bg-dark-I font-code`
+      body: apply`flex flex-col items-center min-h-screen bg-dark-I font-code pt-4 text-light-I `
     })
   },
   theme: {

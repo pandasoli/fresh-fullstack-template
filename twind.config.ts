@@ -3,7 +3,6 @@ import { css } from 'twind/css'
 import { apply } from 'twind'
 
 
-
 export default {
   selfURL: import.meta.url,
   preflight(preflight) {
@@ -11,30 +10,37 @@ export default {
 
     return css(preflight, {
       html: { scrollBehavior: 'smooth' },
-      body: apply`flex flex-col items-center min-h-screen bg-dark-I font-code pt-4 text-light-I `
+      body: apply`flex flex-col items-center min-h-screen bg-light-I text-font-cl`,
+      span: apply`text-font-soft`,
+      a: apply`text-font-soft hover:underline cursor-pointer`
     })
   },
   theme: {
     fontFamily: {
-      code: ['Fira Code', 'IMB', 'sans-serif']
+      'fira-code': ['Fira Code', 'IMB', 'sans-serif']
     },
     extend: {
       colors: {
-        'light-I':	'#c0cedd',
-        'light-II':	'#99a0a8',
-        'light-III':	'#c6c3c0',
-        'dark-I':	'#191f28',
-        'dark-II':	'#1f2730',
-        'dark-III':	'#374656',
-        'accent-I':	'#ecbd7c',
-        'accent-II':	'#c69f68',
-        'accent-III':	'#93764d',
-        'color-I':	'#c68768',
-        'color-II':	'#c66868',
-        'color-III':	'#c66890',
-        'color-IV':	'#6880c6',
-        'color-V':	'#68aec6',
-        'color-VI':	'#9fc76d'
+        'font-cl': '#24292f',
+        'font-soft': '#6b7280',
+        'font-disabled': '#9ca3af',
+
+        'light-I': '#fff',
+        'light-II': '#ddd',
+
+        'green-I': '#22c55e',
+        'green-II': '#86efac',
+        'green-III': '#b1dca7',
+
+        'blue-I': '#67b0cf',
+        'blue-II': '#bfdbfe',
+        'blue-III': '#a2d6ec',
+
+        'yellow-I': '#ffed4e',
+        'yellow-II': '#ffd80b',
+        'yellow-III': '#fff962',
+
+        'red-I': '#ff8b8b'
       },
       opacity: {
         15: '.15'
@@ -52,8 +58,60 @@ export default {
         136: '34rem'
       },
       animation: {
-        move: 'move 6s linear infinite'
+        bounce: 'bounce 1.5s',
+        // slideup: 'slideup 1s ease-in-out',
+        // wave: 'wave 1.2s linear infinite',
+        pop: 'pop 2s'
+      }
+    },
+    keyframes: {
+      // slideup: {
+      //   from: { opacity: 0, transform: 'translateY(25%)' },
+      //   to: { opacity: 1, transform: 'none' }
+      // },
+      // wave: {
+      //   '0%': { transform: 'scale(0)' },
+      //   '50%': { transform: 'scale(1)' },
+      //   '100%': { transform: 'scale(0)' }
+      // },
+      pop: {
+        '0%': { opacity: 0, transition: 'opacity .25s' },
+        '20%': { opacity: .70 },
+        '90%': { opacity: 0 }
+      },
+      bounce: {
+        '0%': {
+          transform: 'translateY(-25%)',
+          'animation-timing-function': 'cubic-bezier(.8, 0, 1, 1)'
+        },
+        '25%': {
+          transform: 'none',
+          'animation-timing-function': 'cubic-bezier(0, 0, .2, 1)'
+        },
+
+        '40%': {
+          transform: 'translateY(-15%)',
+          'animation-timing-function': 'cubic-bezier(.8, 0, 1, 1)'
+        },
+        '50%': {
+          transform: 'none',
+          'animation-timing-function': 'cubic-bezier(0, 0, .2, 1)'
+        },
+
+        '70%': {
+          transform: 'translateY(-7%)',
+          'animation-timing-function': 'cubic-bezier(.8, 0, 1, 1)'
+        },
+        '80%': {
+          transform: 'none',
+          'animation-timing-function': 'cubic-bezier(0, 0, .2, 1)'
+        }
       }
     }
+  },
+  plugins: {
+    'outline-solid': css({
+      'outline': 'solid'
+    })
   }
 } as Options

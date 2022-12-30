@@ -1,6 +1,8 @@
 import { AppProps } from '$fresh/server.ts'
 import { Head } from '$fresh/runtime.ts'
 
+import Header from '@components/Header.tsx'
+
 
 const App = ({ Component }: AppProps) =>
   <>
@@ -12,7 +14,35 @@ const App = ({ Component }: AppProps) =>
       <link rel='icon' href='/logo.svg' type='image/svg+xml'/>
     </Head>
 
-    <Component/>
+    <style>
+      {`
+        .markdown-body {
+          word-wrap: break-word;
+          font-family: unset;
+          font-size: 16px;
+          line-height: 1.5;
+        }
+
+        ::-webkit-scrollbar {
+          width: 14px;
+          height: 14px;
+          background-color: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          border-radius: 7px;
+          background-color: #24292f;
+          border: 4px solid transparent;
+          background-clip: padding-box;
+        }
+      `}
+    </style>
+
+    <Header active=''/>
+
+    <div class='flex flex-col flex-grow-1'>
+      <Component/>
+    </div>
   </>
 
 

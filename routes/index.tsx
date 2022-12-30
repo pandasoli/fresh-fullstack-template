@@ -1,16 +1,61 @@
-import { Head } from '$fresh/runtime.ts'
+import { Handlers, PageProps } from '$fresh/server.ts'
+import axiod from 'axiod'
+
+import Footer from '@components/Footer.tsx'
+import SearchPage from '@islands/SearchPage.tsx'
+import Post from '@components/Post.tsx'
+
+import { type IPost } from '$types/Post.ts'
 
 
-const Home = () =>
-  <>
-    <Head>
-      <title>Fresh | Init</title>
-    </Head>
+export const handler:  Handlers<IPost[] | null> = {
+  async GET(_req, ctx) {
+    const res = await axiod.get('http://localhost:8000/api/posts')
+    return ctx.render(await res.data)
+  }
+}
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Error non laudantium debitis temporibus nam ullam, nihil, dolores quam illum quas illo vero nisi laborum atque corrupti aperiam, adipisci quibusdam similique?
-    </p>
-  </>
+const Page = ({ data }: PageProps<IPost[] | null>) => {
+  if (!data)
+    return <>{ JSON.stringify(data) }</>
 
 
-export default Home
+  const Tags = () => {
+    let res: string[] = []
+
+    data.forEach(post => {
+      res.push(post.tags[0])
+    })
+
+    res = res.filter((tag, idx) => res.indexOf(tag) === idx)
+
+    return res
+  }
+
+  return <div>
+    <section class='flex flex-col items-center mb-10 max-w-[100vw]'>
+      <img
+        class='max-h-[270px] max-w-[100vw]'
+        src='/Deno Wallpaper.jpeg'
+        alt='Hero image'
+      />
+    </section>
+
+    <SearchPage/>
+
+    <div
+      class='flex flex-wrap justify-evenly'
+    >
+      {
+        data.map(post =>
+          <Post { ...post }/>
+        )
+      }
+    </div>
+
+    <Footer/>
+  </div>
+}
+
+
+export default Page
